@@ -22,30 +22,28 @@ class App {
 
     this.middlewares();
     this.routes();
-    // this.exceptionHandler();
+    this.exceptionHandler();
   }
 
   middlewares() {
-    // this.app.use(Sentry.Handlers.requestHandler()); // olhar
     this.app.use(cors());
     this.app.use(express.json());
   }
 
   routes() {
     this.app.use(routes);
-    // this.app.use(Sentry.Handlers.errorHandler());
   }
 
-  // exceptionHandler() {
-  //   this.app.use(async (err, req, res, next) => {
-  //     if (process.env.NODE_ENV === 'development') {
-  //       const errors = await new Youch(err, req).toJSON();
+  exceptionHandler() {
+    this.app.use(async (err, req, res, next) => {
+      if (process.env.NODE_ENV === 'development') {
+        const errors = await new Youch(err, req).toJSON();
 
-  //       return res.status(500).json(errors);
-  //     }
-  //     return res.status(500).json({ error: 'Internal server error' });
-  //   });
-  // }
+        return res.status(500).json(errors);
+      }
+      return res.status(500).json({ error: 'Internal server error' });
+    });
+  }
 }
 
 export default new App().server;
