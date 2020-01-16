@@ -2,7 +2,7 @@ import 'dotenv/config';
 
 import express from 'express';
 import cors from 'cors';
-// import Youch from 'youch';
+import Youch from 'youch';
 import * as Sentry from '@sentry/node';
 
 import http from 'http';
